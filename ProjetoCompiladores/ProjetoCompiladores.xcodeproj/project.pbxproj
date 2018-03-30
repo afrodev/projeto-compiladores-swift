@@ -8,19 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		F2B40E66205B59F6000E081D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B40E65205B59F6000E081D /* AppDelegate.swift */; };
-		F2B40E68205B59F6000E081D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B40E67205B59F6000E081D /* ViewController.swift */; };
 		F2B40E6A205B59F6000E081D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2B40E69205B59F6000E081D /* Assets.xcassets */; };
 		F2B40E6D205B59F6000E081D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2B40E6B205B59F6000E081D /* Main.storyboard */; };
+		F2FBF547206E94C000B79CEF /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FBF546206E94C000B79CEF /* MainVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F2B40E62205B59F6000E081D /* ProjetoCompiladores.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjetoCompiladores.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B40E65205B59F6000E081D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F2B40E67205B59F6000E081D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F2B40E69205B59F6000E081D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2B40E6C205B59F6000E081D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F2B40E6E205B59F6000E081D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2B40E6F205B59F6000E081D /* ProjetoCompiladores.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjetoCompiladores.entitlements; sourceTree = "<group>"; };
+		F2FBF546206E94C000B79CEF /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,14 +53,54 @@
 		F2B40E64205B59F6000E081D /* ProjetoCompiladores */ = {
 			isa = PBXGroup;
 			children = (
+				F2FBF54A206E951000B79CEF /* Classes */,
+				F2FBF54F206E958B00B79CEF /* Resources */,
+			);
+			path = ProjetoCompiladores;
+			sourceTree = "<group>";
+		};
+		F2FBF54A206E951000B79CEF /* Classes */ = {
+			isa = PBXGroup;
+			children = (
 				F2B40E65205B59F6000E081D /* AppDelegate.swift */,
-				F2B40E67205B59F6000E081D /* ViewController.swift */,
-				F2B40E69205B59F6000E081D /* Assets.xcassets */,
+				F2FBF54B206E952B00B79CEF /* UI */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F2FBF54B206E952B00B79CEF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F2FBF54E206E955300B79CEF /* Storyboard */,
+				F2FBF54D206E954A00B79CEF /* ViewController */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F2FBF54D206E954A00B79CEF /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F2FBF546206E94C000B79CEF /* MainVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		F2FBF54E206E955300B79CEF /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
 				F2B40E6B205B59F6000E081D /* Main.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		F2FBF54F206E958B00B79CEF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F2B40E69205B59F6000E081D /* Assets.xcassets */,
 				F2B40E6E205B59F6000E081D /* Info.plist */,
 				F2B40E6F205B59F6000E081D /* ProjetoCompiladores.entitlements */,
 			);
-			path = ProjetoCompiladores;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,7 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2B40E68205B59F6000E081D /* ViewController.swift in Sources */,
+				F2FBF547206E94C000B79CEF /* MainVC.swift in Sources */,
 				F2B40E66205B59F6000E081D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,10 +303,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ProjetoCompiladores/ProjetoCompiladores.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProjetoCompiladores/Resources/ProjetoCompiladores.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = ProjetoCompiladores/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/ProjetoCompiladores/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.senac.sp.ProjetoCompiladores;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -278,10 +318,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ProjetoCompiladores/ProjetoCompiladores.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProjetoCompiladores/Resources/ProjetoCompiladores.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = ProjetoCompiladores/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/ProjetoCompiladores/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.senac.sp.ProjetoCompiladores;
 				PRODUCT_NAME = "$(TARGET_NAME)";
