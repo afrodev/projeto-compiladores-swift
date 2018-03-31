@@ -11,6 +11,7 @@
 		F2B40E6A205B59F6000E081D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2B40E69205B59F6000E081D /* Assets.xcassets */; };
 		F2B40E6D205B59F6000E081D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2B40E6B205B59F6000E081D /* Main.storyboard */; };
 		F2FBF547206E94C000B79CEF /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FBF546206E94C000B79CEF /* MainVC.swift */; };
+		F2FBF551206EC65D00B79CEF /* Character+ASCII.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FBF550206EC65D00B79CEF /* Character+ASCII.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		F2B40E6E205B59F6000E081D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2B40E6F205B59F6000E081D /* ProjetoCompiladores.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjetoCompiladores.entitlements; sourceTree = "<group>"; };
 		F2FBF546206E94C000B79CEF /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		F2FBF550206EC65D00B79CEF /* Character+ASCII.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+ASCII.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				F2B40E65205B59F6000E081D /* AppDelegate.swift */,
 				F2FBF54B206E952B00B79CEF /* UI */,
+				F2FBF553206EC66800B79CEF /* Utils */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -101,6 +104,14 @@
 				F2B40E6F205B59F6000E081D /* ProjetoCompiladores.entitlements */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F2FBF553206EC66800B79CEF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F2FBF550206EC65D00B79CEF /* Character+ASCII.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +187,7 @@
 			files = (
 				F2FBF547206E94C000B79CEF /* MainVC.swift in Sources */,
 				F2B40E66205B59F6000E081D /* AppDelegate.swift in Sources */,
+				F2FBF551206EC65D00B79CEF /* Character+ASCII.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

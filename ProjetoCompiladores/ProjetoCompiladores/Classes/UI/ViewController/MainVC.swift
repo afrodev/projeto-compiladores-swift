@@ -12,15 +12,15 @@ class MainVC: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(readLine())
         // Main sendo executado
         // Analisador léxico
-        let lexer = Lexer()
+        //let lexer = Lexer()
         
         // Analisador sintático
-        let parser = Parser(lexer: lexer)
-        parser.program()
-        print("")
+//        let parser = Parser(lexer: lexer)
+//        parser.program()
+//        print("")
     }
 }
 
@@ -100,7 +100,7 @@ class Real: Token {
 
 // MARK: Lexer - A função scan, reconhece números, identificadores e palavras reservadas
 class Lexer {
-    static let line: Int = 1
+    var line: Int = 1
     var peek: Character = " "
     var words: [String: String] = [:]
     
@@ -136,6 +136,82 @@ class Lexer {
         }
         peek = " "
         return true
+    }
+    
+    func scan() -> Token? {
+        while readch() {
+            if peek == "\n" || peek == "\t" { continue }
+            else if peek == "\n" { line += 1 }
+            else { break }
+        }
+    
+        switch peek {
+        case "&":
+            if readch(c: "&") { return Word.and }
+            else { return Token(t: Int(Character("&").asciiValue!) ) }
+        case "|":
+            if readch(c: "|") { return Word.or }
+            else { return Token(t: Int(Character("|").asciiValue!) ) }
+        case "=":
+            if readch(c: "=") { return Word.eq }
+            else { return Token(t: Int(Character("=").asciiValue!) ) }
+        case "!":
+            if readch(c: "=") { return Word.ne }
+            else { return Token(t: Int(Character("!").asciiValue!) ) }
+        case "<":
+            if readch(c: "=") { return Word.le }
+            else { return Token(t: Int(Character("<").asciiValue!) ) }
+        case ">":
+            if readch(c: "=") { return Word.ge }
+            else { return Token(t: Int(Character(">").asciiValue!) ) }
+        default:
+            break
+        }
+        
+        if peek.isDigit() {
+            var v = 0
+            
+            repeat {
+                guard let pValue = Int(String(peek)) else { return nil }
+                v = 10 * v + pValue
+                readch()
+                
+            } while (peek.isDigit())
+            
+            if (peek != ".") { return Num(v: v) } // o peek devia ser '..'
+            var x: Float = Float(v)
+            var d: Float = 10
+            
+            while true {
+                readch()
+                if peek.isDigit() { break }
+                x = x + Float(peek.toInt() ?? 0) / d
+                d = d * 10
+            }
+            
+            return Real(v: x)
+        }
+        
+        if peek.isLetter() {
+            var b: String = ""
+            repeat {
+                b.append(peek)
+                readch()
+            } while (peek.isDigit() || peek.isLetter())
+            
+            let s: String = b
+            if let sw = words[s] {
+                let w: Word = Word.init(s: sw, tag: 0)
+                return w
+            }
+            
+            let w = Word.init(s: s, tag: Tag.ID)
+            words.updateValue(s, forKey: w.toString())
+            return w
+        }
+        
+        let tok = Token(t: peek.toInt() ?? 0)
+        return tok
     }
     
 }
