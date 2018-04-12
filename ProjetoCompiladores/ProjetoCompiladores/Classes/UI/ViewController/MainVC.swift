@@ -12,26 +12,27 @@ class MainVC: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(readLine())
+        
+        //print(readLine())
         // Main sendo executado
         // Analisador léxico
         //let lexer = Lexer()
         
         // Analisador sintático
-//        let parser = Parser(lexer: lexer)
-//        parser.program()
-//        print("")
+//        let parse = Parser(lexer: lexer)
+//        parse.program()
+//        print("\n")
     }
 }
 
 // MARK: É utilizada nos analisadores, sendo INDEX, MINUS e TEMP usadas nas árvores sintáticas
 class Tag {
-    static let AND = 256, BASIC = 257, BREAK = 258, DO = 259, ELSE = 260,
-    EQ = 261, FALSE = 262, GE = 263, ID = 264, IF = 265, INDEX = 266,
-    LE = 267, MINUS = 268, NE = 269, NUM = 270, OR = 271, REAL = 272,
-    TEMP = 273, TRUE = 274, WHILE = 275
+    static let
+    AND   = 256, BASIC = 257, BREAK = 258, DO   = 259, ELSE  = 260,
+    EQ    = 261, FALSE = 262, GE    = 263, ID   = 264, IF    = 265,
+    INDEX = 266, LE    = 267, MINUS = 268, NE   = 269, NUM   = 270,
+    OR    = 271, REAL  = 272, TEMP  = 273, TRUE = 274, WHILE = 275
 }
-
 
 class Token {
     final let tag: Int
@@ -41,7 +42,12 @@ class Token {
     }
     
     func toString() -> String {
-        return "\(tag)"
+        guard let code = UnicodeScalar(tag) else {
+            print("Error trying to cast Int to Char")
+            return ""
+        }
+        
+        return "\(Character(code))"
     }
 }
 
