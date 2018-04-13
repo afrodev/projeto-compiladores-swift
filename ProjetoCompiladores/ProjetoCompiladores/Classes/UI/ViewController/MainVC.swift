@@ -13,6 +13,8 @@ class MainVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(Lexer().readch())
+        
         //print(readLine())
         // Main sendo executado
         // Analisador léxico
@@ -60,7 +62,12 @@ class Num: Token {
     }
     
     override func toString() -> String {
-        return "\(value)"
+        guard let code = UnicodeScalar(value) else {
+            print("Error trying to cast Int to Char")
+            return ""
+        }
+        
+        return "\(Character(code))"
     }
 }
 
@@ -77,16 +84,16 @@ class Word: Token {
         return lexeme
     }
     
-    static let and = Word(s: "&&", tag: Tag.AND)
-    static let or = Word(s: "||", tag: Tag.OR)
-    static let eq = Word(s: "==", tag: Tag.EQ)
-    static let ne = Word(s: "!=", tag: Tag.NE)
-    static let le = Word(s: "<=", tag: Tag.LE)
-    static let ge = Word(s: ">=", tag: Tag.GE)
+    static let and   = Word(s: "&&", tag: Tag.AND)
+    static let or    = Word(s: "||", tag: Tag.OR)
+    static let eq    = Word(s: "==", tag: Tag.EQ)
+    static let ne    = Word(s: "!=", tag: Tag.NE)
+    static let le    = Word(s: "<=", tag: Tag.LE)
+    static let ge    = Word(s: ">=", tag: Tag.GE)
     static let minus = Word(s: "minus", tag: Tag.MINUS)
-    static let True = Word(s: "true", tag: Tag.TRUE)
+    static let True  = Word(s: "true", tag: Tag.TRUE)
     static let False = Word(s: "false", tag: Tag.FALSE)
-    static let temp = Word(s: "t", tag: Tag.TEMP)
+    static let temp  = Word(s: "t", tag: Tag.TEMP)
 
 }
 
@@ -104,9 +111,13 @@ class Real: Token {
     }
 }
 
+enum ReadChError: Error {
+    case failToRead
+}
+
 // MARK: Lexer - A função scan, reconhece números, identificadores e palavras reservadas
 class Lexer {
-    var line: Int = 1
+    static var line: Int = 1
     var peek: Character = " "
     var words: [String: String] = [:]
     
@@ -143,14 +154,14 @@ class Lexer {
         peek = " "
         return true
     }
-    
+
     func scan() -> Token? {
         while readch() {
-            if peek == "\n" || peek == "\t" { continue }
-            else if peek == "\n" { line += 1 }
+            if peek == " " || peek == "\t" { continue }
+            else if peek == "\n" { Lexer.line += 1 }
             else { break }
         }
-    
+
         switch peek {
         case "&":
             if readch(c: "&") { return Word.and }
@@ -173,53 +184,55 @@ class Lexer {
         default:
             break
         }
-        
+
         if peek.isDigit() {
             var v = 0
-            
+
             repeat {
                 guard let pValue = Int(String(peek)) else { return nil }
                 v = 10 * v + pValue
-                readch()
-                
+                _ = readch()
+
             } while (peek.isDigit())
-            
+
             if (peek != ".") { return Num(v: v) } // o peek devia ser '..'
             var x: Float = Float(v)
             var d: Float = 10
-            
+
             while true {
-                readch()
-                if peek.isDigit() { break }
+                _ = readch()
+                if !peek.isDigit() { break }
                 x = x + Float(peek.toInt() ?? 0) / d
                 d = d * 10
             }
-            
+
             return Real(v: x)
         }
-        
+
         if peek.isLetter() {
             var b: String = ""
+            
             repeat {
                 b.append(peek)
-                readch()
+                _ = readch()
             } while (peek.isDigit() || peek.isLetter())
-            
+
             let s: String = b
+            
             if let sw = words[s] {
                 let w: Word = Word.init(s: sw, tag: 0)
                 return w
             }
-            
-            let w = Word.init(s: s, tag: Tag.ID)
+
+            let w = Word(s: s, tag: Tag.ID)
             words.updateValue(s, forKey: w.toString())
             return w
         }
-        
+
         let tok = Token(t: peek.toInt() ?? 0)
+        peek = " "
         return tok
     }
-    
 }
 
 class Parser {
@@ -233,6 +246,43 @@ class Parser {
         
     }
 }
+
+class Env {
+    private var table: [Int : String]
+    internal var prev: Env
+//    {
+//        variaveis "Internal" podem ser acessadas apenas
+//        dentro da propria classe ou por herança, semelhante
+//        ao "Protected" do Java
+//    }
+    
+    init(n: Env) {
+        self.table = [:]
+        self.prev = n
+    }
+    
+    func put(w: Token, i: Int) {
+        self.table.updateValue(w.toString(), forKey: i)
+    }
+    
+    func get(w: Token) -> Int? {
+        var e: Env? = self
+        
+        while e != nil {
+            let found: Int?
+            
+            if e!.table[w.tag] != nil {
+                found = w.tag
+                return found!
+            }
+            e = e!.prev
+        }
+
+        return nil
+    }
+}
+
+
 
 
 
