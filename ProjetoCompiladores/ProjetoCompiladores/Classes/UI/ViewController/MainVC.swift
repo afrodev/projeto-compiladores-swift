@@ -129,10 +129,10 @@ class Lexer {
         reserve(word: Word(s: "break", tag: Tag.BREAK))
         reserve(word: Word.True)
         reserve(word: Word.False)
-//        reserve(word: Type.Int)
-//        reserve(word: Type.Char)
-//        reserve(word: Type.Bool)
-//        reserve(word: Type.Float)
+        reserve(word: Type.int)
+        reserve(word: Type.char)
+        reserve(word: Type.bool)
+        reserve(word: Type.float)
     }
     
     func reserve(word: Word) {
@@ -282,7 +282,117 @@ class Env {
     }
 }
 
+class Type: Word {
+    var width: Int = 0  // width e usado para alocacao de memoria
+    
+    init(s: String, tag: Int, w: Int) {
+        super.init(s: s, tag: tag)
+        self.width = w
+    }
+    
+    public static let int   = Type(s: "int", tag: Tag.BASIC, w: 4),
+                      float = Type(s: "float", tag: Tag.BASIC, w: 8),
+                      char  = Type(s: "char", tag: Tag.BASIC, w: 1),
+                      bool  = Type(s: "bool", tag: Tag.BASIC, w: 1)
+    
+    static func numeric(p: Type) -> Bool {
+        if p.lexeme == Type.char.lexeme || p.lexeme == Type.int.lexeme || p.lexeme == Type.float.lexeme {
+            return true
+        }
+        
+        return false
+    }
+    
+    static func max(p1: Type, p2: Type) -> Type? {
+        if !numeric(p: p1) || !numeric(p: p2) {
+            return nil
+        }
+        
+        else if p1.lexeme == Type.float.lexeme || p2.lexeme == Type.float.lexeme {
+            return Type.float
+        }
+        
+        else if p1.lexeme == Type.int.lexeme || p2.lexeme == Type.int.lexeme {
+            return Type.int
+        }
+        
+        return Type.char
+    }
+}
 
+// Arquivo: array.swift (deveria ser Array.swift)
+class array: Type {
+    var of: Type        // arranjo *of* type
+    var size: Int = 1   // numero de elementos
+    
+    init(sz: Int, p: Type) {
+        self.of = p
+        super.init(s: "[]", tag: Tag.INDEX, w: sz * p.width)
+        self.size = sz
+    }
+    
+    override func toString() -> String {
+        return "[\(size)]\(of.toString())"
+    }
+}
 
+extension String: Error {}
 
+class Node {
+    var lexline: Int = 0
+    
+    init() {
+        self.lexline = Lexer.line
+    }
+    
+    func error(s: String) throws {
+        throw "near line \(lexline): \(s)"
+    }
+    
+    static var labels: Int = 0
+    
+    func newLabel() -> Int {
+        return Node.labels + 1
+    }
+    
+    func emitLabel(i: Int) {
+        print("L", i, ":")
+    }
+    
+    func emit(s: String) {
+        print("\t", s)
+    }
+}
 
+class Expr: Node {
+    var op: Token
+    var type: Type
+    
+    init(tok: Token, p: Type) {
+        self.op = tok
+        self.type = p
+    }
+    
+    func gen() -> Expr {
+        return self
+    }
+    
+    func reduce() -> Expr {
+        return self
+    }
+    
+    func jumping(t: Int, f: Int) {
+        emitJumps(test: toString(), t: t, f: f)
+    }
+    
+    // Falta umas parada
+    func emitJumps(test: String, t: Int, f: Int) {
+        if t != 0 && f != 0 {
+            emit(s: "if \(test)")
+        }
+    }
+    
+    func toString() -> String {
+        return self.op.toString()
+    }
+}
