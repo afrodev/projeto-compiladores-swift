@@ -295,24 +295,24 @@ class Type: Word {
                       char  = Type(s: "char", tag: Tag.BASIC, w: 1),
                       bool  = Type(s: "bool", tag: Tag.BASIC, w: 1)
     
-    static func numeric(p: Type) -> Bool {
-        if p.lexeme == Type.char.lexeme || p.lexeme == Type.int.lexeme || p.lexeme == Type.float.lexeme {
+    static func numeric(p: Type?) -> Bool {
+        if p?.lexeme == Type.char.lexeme || p?.lexeme == Type.int.lexeme || p?.lexeme == Type.float.lexeme {
             return true
         }
         
         return false
     }
     
-    static func max(p1: Type, p2: Type) -> Type? {
+    static func max(p1: Type?, p2: Type?) -> Type? {
         if !numeric(p: p1) || !numeric(p: p2) {
             return nil
         }
         
-        else if p1.lexeme == Type.float.lexeme || p2.lexeme == Type.float.lexeme {
+        else if p1?.lexeme == Type.float.lexeme || p2?.lexeme == Type.float.lexeme {
             return Type.float
         }
         
-        else if p1.lexeme == Type.int.lexeme || p2.lexeme == Type.int.lexeme {
+        else if p1?.lexeme == Type.int.lexeme || p2?.lexeme == Type.int.lexeme {
             return Type.int
         }
         
@@ -366,9 +366,9 @@ class Node {
 
 class Expr: Node {
     var op: Token
-    var type: Type
+    var type: Type?
     
-    init(tok: Token, p: Type) {
+    init(tok: Token, p: Type?) {
         self.op = tok
         self.type = p
     }
@@ -388,11 +388,397 @@ class Expr: Node {
     // Falta umas parada
     func emitJumps(test: String, t: Int, f: Int) {
         if t != 0 && f != 0 {
-            emit(s: "if \(test)")
+            emit(s: "if \(test) goto L \(t)")
+            emit(s: "goto L \(f)")
+        } else if t != 0 {
+            emit(s: "if \(test) goto L \(t)")
+        } else if f != 0 {
+            emit(s: "iffalse \(test) goto L \(f)")
         }
+        // Se não nenhum desses casos não faz nada
     }
     
     func toString() -> String {
         return self.op.toString()
     }
 }
+
+class Id: Expr {
+    var offset: Int
+    
+    init(id: Word, p: Type, b: Int) {
+        self.offset = b
+        super.init(tok: id, p: p)
+    }
+}
+
+class Op: Expr {
+    override init(tok: Token, p: Type?) {
+        super.init(tok: tok, p: p)
+    }
+    
+    override func reduce() -> Expr {
+        let x = gen()
+        let t = Temp(p: type)
+        
+        emit(s: "\(t.toString()) = \(x.toString())")
+        
+        return t
+    }
+}
+
+
+class Arith: Op {
+    let expr1, expr2: Expr
+    
+    init(tok: Token, x1: Expr, x2: Expr) {
+        self.expr1 = x1
+        self.expr2 = x2
+        super.init(tok: tok, p: nil)
+
+        self.type = Type.max(p1: expr1.type, p2: expr2.type)
+        
+        if type == nil {
+            // Deixei sem tratar porque não é pra rodar mais de que der error
+            try! error(s: "type error")
+        }
+        
+    }
+    
+    override func gen() -> Expr {
+        return Arith.init(tok: op, x1: expr1.reduce(), x2: expr2.reduce())
+    }
+    
+    override func toString() -> String {
+        return "\(expr1.toString()) \(op.toString()) \(expr2.toString())"
+    }
+}
+
+class Temp: Expr {
+    static var count = 0
+    var number = 0
+    
+    init(p: Type?) {
+        super.init(tok: Word.temp, p: p)
+        self.number = Temp.count + 1
+    }
+    
+    override func toString() -> String {
+        return "t \(number)"
+    }
+}
+
+class Unary: Op {
+    var expr: Expr
+    
+    init(tok: Token, x: Expr) {
+        self.expr = x
+        super.init(tok: tok, p: nil)
+
+        self.type = Type.max(p1: Type.int, p2: expr.type)
+        if type == nil {
+            try! error(s: "type error")
+        }
+    }
+    
+    override func gen() -> Expr {
+        return Unary(tok: op, x: expr.reduce())
+    }
+    
+    override func toString() -> String {
+        return "\(op.toString()) \(expr.toString())"
+    }
+}
+
+class Constant: Expr {
+    override init(tok: Token, p: Type?) {
+        super.init(tok: tok, p: p)
+    }
+    
+    init(i: Int) {
+        super.init(tok: Num(v: i), p: Type.int)
+    }
+    
+    static var True = Constant(tok: Word.True, p: Type.bool),
+        False = Constant(tok: Word.False, p: Type.bool)
+    
+    override func jumping(t: Int, f: Int) {
+        if self === Constant.True && t != 0 {
+            emit(s: "goto L \(t)")
+        } else if self === Constant.False && f != 0 {
+            emit(s: "goto L \(f)")
+        }
+    }
+}
+
+class Logical: Expr {
+    var expr1, expr2: Expr
+    
+    init(tok: Token, x1: Expr, x2: Expr) {
+        self.expr1 = x1
+        self.expr2 = x2
+        super.init(tok: tok, p: nil)
+        self.type = check(p1: expr1.type, p2: expr2.type)
+        
+        if type == nil {
+            try! error(s: "type error")
+        }
+    }
+    
+    func check(p1: Type?, p2: Type?) -> Type? {
+        if p1 === Type.bool && p2 === Type.bool {
+            return Type.bool
+        } else {
+            return nil
+        }
+    }
+    
+    override func gen() -> Expr {
+        let f = newLabel()
+        let a = newLabel()
+        
+        let temp = Temp(p: type)
+        self.jumping(t: 0, f: f)
+        
+        emit(s: "\(temp.toString()) = true")
+        emit(s: "goto L \(a)")
+        emitLabel(i: f)
+        emit(s: "\(temp.toString()) = false")
+        emitLabel(i: a)
+        
+        return temp
+    }
+    
+    override func toString() -> String {
+        return expr1.toString() + " " + op.toString() + " " + expr2.toString()
+    }
+}
+
+
+class Or: Logical {
+    override init(tok: Token, x1: Expr, x2: Expr) {
+        super.init(tok: tok, x1: x1, x2: x2)
+    }
+    
+    override func jumping(t: Int, f: Int) {
+        let label = t != 0 ? t : newLabel()
+        expr1.jumping(t: label, f: 0)
+        expr2.jumping(t: t, f: f)
+        if t == 0 {
+            emitLabel(i: label)
+        }
+    }
+}
+
+class And: Logical {
+    override init(tok: Token, x1: Expr, x2: Expr) {
+        super.init(tok: tok, x1: x2, x2: x2)
+    }
+    
+    override func jumping(t: Int, f: Int) {
+        let label = f != 0 ? f : newLabel()
+        expr1.jumping(t: 0, f: label)
+        expr2.jumping(t: f, f: t)
+        
+        if f == 0 {
+            emitLabel(i: label)
+        }
+    }
+    
+    override func toString() -> String {
+        return op.toString() + " " + expr2.toString()
+    }
+}
+
+class Not: Logical {
+    override init(tok: Token, x1: Expr, x2: Expr) {
+        super.init(tok: tok, x1: x2, x2: x2)
+    }
+    
+    override func jumping(t: Int, f: Int) {
+        expr2.jumping(t: f, f: t)
+    }
+    
+    override func toString() -> String {
+        return op.toString() + " " + expr2.toString()
+    }
+}
+
+
+class Rel: Logical {
+    override init(tok: Token, x1: Expr, x2: Expr) {
+        super.init(tok: tok, x1: x2, x2: x2)
+    }
+    
+    override func check(p1: Type?, p2: Type?) -> Type? {
+        // Não entendi porque é assim sendo que sempre falha
+        // Pag. 613
+        if p1 is Array<Any> || p2 is Array<Any> {
+            return nil
+        } else if p1 === p2 {
+            return Type.bool
+        } else {
+            return nil
+        }
+    }
+    
+    override func jumping(t: Int, f: Int) {
+        let a = expr1.reduce()
+        let b = expr2.reduce()
+        let test = a.toString() + " " + op.toString() + " " + b.toString()
+        emitJumps(test: test, t: t, f: f)
+        emit(s: "if " + test + " goto L \(t)")
+        emit(s: "goto L \(f)")
+    }
+    
+    override func toString() -> String {
+        return op.toString() + " " + expr2.toString()
+    }
+}
+
+class Access: Op {
+    var array: Id
+    var index: Expr
+    
+    init(a: Id, i: Expr, p: Type?) {
+        self.array = a
+        self.index = i
+        
+        super.init(tok: Word(s: "[]", tag: Tag.INDEX), p: p)
+    }
+    
+    override func gen() -> Expr {
+        return Access(a: array, i: index.reduce(), p: type)
+    }
+    
+    override func jumping(t: Int, f: Int) {
+        emitJumps(test: reduce().toString(), t: t, f: f)
+    }
+    
+    override func toString() -> String {
+        return array.toString() + " [ " + index.toString() + " ] "
+    }
+}
+
+class Stmt: Node {
+    override init() {}
+    
+    static var Null = Stmt()
+    func gen(b: Int, a: Int) {}
+    
+    var after: Int = 0
+    static var Enclosing: Stmt = Stmt.Null
+}
+
+
+class If: Stmt {
+    var expr: Expr
+    var stmt: Stmt
+    
+    init(x: Expr, s: Stmt) {
+        self.expr = x
+        self.stmt = s
+        
+        if !(expr.type === Type.bool) {
+            try! expr.error(s: "boolean required in if")
+        }
+    }
+    
+    override func gen(b: Int, a: Int) {
+        let label = newLabel()
+        expr.jumping(t: 0, f: a)
+        emitLabel(i: label)
+        stmt.gen(b: label, a: a)
+    }
+}
+
+class Else: Stmt {
+    var expr: Expr
+    var stmt1: Stmt
+    var stmt2: Stmt
+    
+    init(x: Expr, s1: Stmt, s2: Stmt) {
+        self.expr = x
+        self.stmt1 = s1
+        self.stmt2 = s2
+        if !(expr.type === Type.bool) {
+            try! expr.error(s: "boolean required in if")
+        }
+    }
+    
+    override func gen(b: Int, a: Int) {
+        let label1 = newLabel()
+        let label2 = newLabel()
+        
+        expr.jumping(t: 0, f: label2)
+        emitLabel(i: label1)
+        stmt1.gen(b: label1, a: a)
+        emit(s: "goto L \(a)")
+        
+        emitLabel(i: label2)
+        stmt1.gen(b: label2, a: a)
+    }
+}
+
+class While: Stmt {
+    var expr: Expr?
+    var stmt: Stmt?
+    
+    override init() {
+        self.expr = nil
+        self.stmt = nil
+    }
+    
+    init(x: Expr?, s: Stmt?) {
+        self.expr = x
+        self.stmt = s
+        
+        if !(expr?.type === Type.bool) {
+            try! expr?.error(s: "boolean required in while")
+        }
+    }
+    
+    override func gen(b: Int, a: Int) {
+        self.after = a
+        self.expr?.jumping(t: 0, f: a)
+        
+        let label = newLabel()
+        emitLabel(i: label)
+        stmt?.gen(b: label, a: b)
+        emit(s: "goto L \(b)")
+    }
+}
+
+class Do: Stmt {
+    var expr: Expr?
+    var stmt: Stmt?
+    
+    override init() {
+        self.expr = nil
+        self.stmt = nil
+    }
+    
+    init(s: Stmt, x: Expr) {
+        self.expr = x
+        self.stmt = s
+        
+        if !(expr?.type === Type.bool) {
+            try! expr?.error(s: "boolean required in do")
+        }
+    }
+    
+    override func gen(b: Int, a: Int) {
+        self.after = a
+        let label = newLabel()
+        stmt?.gen(b: b, a: label)
+        emitLabel(i: label)
+        expr?.jumping(t: b, f: 0)
+    }
+}
+
+
+
+
+
+
+
