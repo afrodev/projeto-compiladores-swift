@@ -13,14 +13,11 @@ class MainVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(Lexer().readch())
+//        Main sendo executado
+//        Analisador léxico
+//        let lexer = Lexer()
         
-        //print(readLine())
-        // Main sendo executado
-        // Analisador léxico
-        //let lexer = Lexer()
-        
-        // Analisador sintático
+//        Analisador sintático
 //        let parse = Parser(lexer: lexer)
 //        parse.program()
 //        print("\n")
@@ -251,9 +248,9 @@ class Env {
     private var table: [Int : String]
     internal var prev: Env
 //    {
-//        variaveis "Internal" podem ser acessadas apenas
+//        variaveis "internal" podem ser acessadas apenas
 //        dentro da propria classe ou por herança, semelhante
-//        ao "Protected" do Java
+//        ao "protected" do Java
 //    }
     
     init(n: Env) {
@@ -886,8 +883,8 @@ class Break: Stmt {
     override init() {
         self.stmt = Stmt.Enclosing
         super.init()
-                
-        if Stmt.Enclosing === nil {
+        
+        if Stmt.Enclosing === Stmt.Null { // talvez isso resolva mas sem ctz
             try! error(s: "unenclosed break")
         }
     }
