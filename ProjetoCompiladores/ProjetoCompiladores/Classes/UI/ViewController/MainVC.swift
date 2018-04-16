@@ -321,7 +321,7 @@ class Type: Word {
 }
 
 // Arquivo: array.swift (deveria ser Array.swift)
-class array: Type {
+class Array: Type {
     var of: Type        // arranjo *of* type
     var size: Int = 1   // numero de elementos
     
@@ -385,7 +385,6 @@ class Expr: Node {
         emitJumps(test: toString(), t: t, f: f)
     }
     
-    // Falta umas parada
     func emitJumps(test: String, t: Int, f: Int) {
         if t != 0 && f != 0 {
             emit(s: "if \(test) goto L \(t)")
@@ -413,6 +412,7 @@ class Id: Expr {
 }
 
 class Op: Expr {
+    
     override init(tok: Token, p: Type?) {
         super.init(tok: tok, p: p)
     }
@@ -499,8 +499,8 @@ class Constant: Expr {
         super.init(tok: Num(v: i), p: Type.int)
     }
     
-    static var True = Constant(tok: Word.True, p: Type.bool),
-        False = Constant(tok: Word.False, p: Type.bool)
+    static var True  = Constant(tok: Word.True, p: Type.bool),
+               False = Constant(tok: Word.False, p: Type.bool)
     
     override func jumping(t: Int, f: Int) {
         if self === Constant.True && t != 0 {
@@ -611,9 +611,7 @@ class Rel: Logical {
     }
     
     override func check(p1: Type?, p2: Type?) -> Type? {
-        // Não entendi porque é assim sendo que sempre falha
-        // Pag. 613
-        if p1 is Array<Any> || p2 is Array<Any> {
+        if p1 is Array || p2 is Array {
             return nil
         } else if p1 === p2 {
             return Type.bool
@@ -761,9 +759,10 @@ class Do: Stmt {
     init(s: Stmt, x: Expr) {
         self.expr = x
         self.stmt = s
+        super.init()
         
         if !(expr?.type === Type.bool) {
-            try! expr?.error(s: "boolean required in do")
+            try! error(s: "boolean required in do")
         }
     }
     
@@ -776,9 +775,127 @@ class Do: Stmt {
     }
 }
 
+class Set: Stmt {
+    var id: Id
+    var expr: Expr
+    
+    init(i: Id, x: Expr) {
+        self.id = i
+        self.expr = x
+        super.init()
+        
+        if check(p1: id.type, p2: x.type) == nil {
+            try! error(s: "type error")
+        }
+    }
+    
+    func check(p1: Type?, p2: Type?) -> Type? {
+        if Type.numeric(p: p1) && Type.numeric(p: p2) {
+            return p2
+        }
+        
+        else if p1?.lexeme == Type.bool.lexeme && p2?.lexeme == Type.bool.lexeme {
+            return p2
+        }
+        
+        else {
+            return nil
+        }
+    }
+    
+    func gen(a: Int, b: Int) {
+        emit(s: "\(id.toString()) = \(expr.gen().toString())")
+    }
+}
 
+class SetElem: Stmt {
+    var array: Id
+    var index: Expr
+    var expr: Expr
+    
+    init(x: Access, y: Expr) {
+        self.array = x.array
+        self.index = x.index
+        self.expr = y
+        super.init()
+        
+        if check(p1: x.type, p2: expr.type) == nil {
+            try! expr.error(s: "type error")
+        }
+    }
+    
+    func check(p1: Type?, p2: Type?) -> Type? {
+        if p1 is Array || p2 is Array {
+            return nil
+        }
+        
+        else if p1 === p2 { // === verifica se p1 aponta pro mesmo endereco de p2
+            return p2       // semelhante ao == do Java
+        }
+        
+        else if Type.numeric(p: p1) && Type.numeric(p: p2) {
+            return p2
+        }
+        
+        else {
+            return nil
+        }
+    }
+    
+    override func gen(b: Int, a: Int) {
+        let s1: String = index.reduce().toString()
+        let s2: String = expr.reduce().toString()
+        
+        emit(s: "\(array.toString()) [ \(s1) ] = \(s2)")
+    }
+}
 
+// Seq.swift
+class Seq: Stmt {
+    var stmt1: Stmt
+    var stmt2: Stmt
+    
+    init(s1: Stmt, s2: Stmt) {
+        self.stmt1 = s1
+        self.stmt2 = s2
+    }
+    
+    override func gen(b: Int, a: Int) {
+        if stmt1 === Stmt.Null {
+            stmt2.gen(b: b, a: a)
+        }
+        
+        else if stmt2 === Stmt.Null {
+            stmt1.gen(b: b, a: a)
+        }
+        
+        else {
+            let label = newLabel()
+            stmt1.gen(b: b, a: label)
+            emitLabel(i: label)
+            stmt2.gen(b: label, a: a)
+        }
+    }
+}
 
+// Break.swift
+class Break: Stmt {
+    var stmt: Stmt
+    
+    // eis um problema! pg.617 ou pg.14
+    override init() {
+        self.stmt = Stmt.Enclosing
+        super.init()
+                
+        if Stmt.Enclosing === nil {
+            try! error(s: "unenclosed break")
+        }
+    }
+    
+    override func gen(b: Int, a: Int) {
+        emit(s: "goto L \(stmt.after)")
+    }
+}
 
 
 
