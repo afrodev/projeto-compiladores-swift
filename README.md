@@ -4,4 +4,4 @@ Projeto da matéria de Compiladores, 7º semestre de Ciência da Computação do
 ## Folowing
 [Front-End] - Manual utilizado como base para desenvolvimento
 
-[Front-End]: <https://bit.ly/2GVrBNc>
+[Front-End]: <https://bit.ly/2HoClXZ>
