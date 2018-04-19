@@ -23,8 +23,8 @@ class Logical: Expr {
     }
     
     func check(p1: Type?, p2: Type?) -> Type? {
-        if p1 === Type.bool && p2 === Type.bool {
-            return Type.bool
+        if p1 === Type.Bool && p2 === Type.Bool {
+            return Type.Bool
         } else {
             return nil
         }

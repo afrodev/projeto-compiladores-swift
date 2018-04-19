@@ -16,7 +16,7 @@ class If: Stmt {
         self.expr = x
         self.stmt = s
         
-        if !(expr.type === Type.bool) {
+        if !(expr.type === Type.Bool) {
             try! expr.error(s: "boolean required in if")
         }
     }

@@ -27,7 +27,7 @@ class Set: Stmt {
             return p2
         }
             
-        else if p1?.lexeme == Type.bool.lexeme && p2?.lexeme == Type.bool.lexeme {
+        else if p1?.lexeme == Type.Bool.lexeme && p2?.lexeme == Type.Bool.lexeme {
             return p2
         }
             

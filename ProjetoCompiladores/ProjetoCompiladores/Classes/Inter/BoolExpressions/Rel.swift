@@ -17,7 +17,7 @@ class Rel: Logical {
         if p1 is Array || p2 is Array {
             return nil
         } else if p1 === p2 {
-            return Type.bool
+            return Type.Bool
         } else {
             return nil
         }

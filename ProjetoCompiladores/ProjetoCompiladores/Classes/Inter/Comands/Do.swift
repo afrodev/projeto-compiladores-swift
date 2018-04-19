@@ -22,7 +22,7 @@ class Do: Stmt {
         self.stmt = s
         super.init()
         
-        if !(expr?.type === Type.bool) {
+        if !(expr?.type === Type.Bool) {
             try! error(s: "boolean required in do")
         }
     }

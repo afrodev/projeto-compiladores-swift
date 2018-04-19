@@ -15,7 +15,7 @@ class Unary: Op {
         self.expr = x
         super.init(tok: tok, p: nil)
         
-        self.type = Type.max(p1: Type.int, p2: expr.type)
+        self.type = Type.max(p1: Type.Int, p2: expr.type)
         if type == nil {
             try! error(s: "type error")
         }

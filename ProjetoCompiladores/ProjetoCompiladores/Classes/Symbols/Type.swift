@@ -16,13 +16,13 @@ class Type: Word {
         self.width = w
     }
     
-    public static let int   = Type(s: "int", tag: Tag.BASIC, w: 4),
-    float = Type(s: "float", tag: Tag.BASIC, w: 8),
-    char  = Type(s: "char", tag: Tag.BASIC, w: 1),
-    bool  = Type(s: "bool", tag: Tag.BASIC, w: 1)
+    public static let Int   = Type(s: "int", tag: Tag.BASIC, w: 4),
+                      Float = Type(s: "float", tag: Tag.BASIC, w: 8),
+                      Char  = Type(s: "char", tag: Tag.BASIC, w: 1),
+                      Bool  = Type(s: "bool", tag: Tag.BASIC, w: 1)
     
     static func numeric(p: Type?) -> Bool {
-        if p?.lexeme == Type.char.lexeme || p?.lexeme == Type.int.lexeme || p?.lexeme == Type.float.lexeme {
+        if p?.lexeme == Type.Char.lexeme || p?.lexeme == Type.Int.lexeme || p?.lexeme == Type.Float.lexeme {
             return true
         }
         
@@ -34,14 +34,14 @@ class Type: Word {
             return nil
         }
             
-        else if p1?.lexeme == Type.float.lexeme || p2?.lexeme == Type.float.lexeme {
-            return Type.float
+        else if p1?.lexeme == Type.Float.lexeme || p2?.lexeme == Type.Float.lexeme {
+            return Type.Float
         }
             
-        else if p1?.lexeme == Type.int.lexeme || p2?.lexeme == Type.int.lexeme {
-            return Type.int
+        else if p1?.lexeme == Type.Int.lexeme || p2?.lexeme == Type.Int.lexeme {
+            return Type.Int
         }
         
-        return Type.char
+        return Type.Char
     }
 }

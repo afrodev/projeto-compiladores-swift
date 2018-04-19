@@ -270,11 +270,11 @@ class Parser {
             match(t: Int(Character(")").asciiValue!))
             return x
         case Tag.NUM:
-            x = Constant(tok: self.look, p: Type.int)
+            x = Constant(tok: self.look, p: Type.Int)
             self.move()
             return x
         case Tag.REAL:
-            x = Constant(tok: self.look, p: Type.float)
+            x = Constant(tok: self.look, p: Type.Float)
             self.move()
             return x
         case Tag.TRUE:

@@ -14,11 +14,11 @@ class Constant: Expr {
     }
     
     init(i: Int) {
-        super.init(tok: Num(v: i), p: Type.int)
+        super.init(tok: Num(v: i), p: Type.Int)
     }
     
-    static var True  = Constant(tok: Word.True, p: Type.bool),
-    False = Constant(tok: Word.False, p: Type.bool)
+    static var True  = Constant(tok: Word.True, p: Type.Bool),
+    False = Constant(tok: Word.False, p: Type.Bool)
     
     override func jumping(t: Int, f: Int) {
         if self === Constant.True && t != 0 {

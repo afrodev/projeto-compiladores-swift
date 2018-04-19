@@ -26,10 +26,10 @@ class Lexer {
         reserve(word: Word(s: "break", tag: Tag.BREAK))
         reserve(word: Word.True)
         reserve(word: Word.False)
-        reserve(word: Type.int)
-        reserve(word: Type.char)
-        reserve(word: Type.bool)
-        reserve(word: Type.float)
+        reserve(word: Type.Int)
+        reserve(word: Type.Char)
+        reserve(word: Type.Bool)
+        reserve(word: Type.Float)
     }
     
     func reserve(word: Word) {
