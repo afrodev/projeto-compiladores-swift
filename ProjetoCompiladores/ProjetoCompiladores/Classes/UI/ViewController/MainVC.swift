@@ -17,8 +17,14 @@ class MainVC: NSViewController {
         let lexer = Lexer()
         
 //        Analisador sintático
-        let parse = Parser(lexer: lexer)
-        parse.program()
+        do {
+            let parse = try Parser(lexer: lexer)
+            try parse.program()
+        } catch let error {
+            print("\n", error)
+            fatalError()
+        }
+        
         print("\n")
     }
 }

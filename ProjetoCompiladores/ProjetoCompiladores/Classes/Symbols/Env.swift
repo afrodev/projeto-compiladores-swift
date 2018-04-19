@@ -10,14 +10,14 @@ import Foundation
 
 class Env {
     private var table: [Token : Id]
-    internal var prev: Env
+    internal var prev: Env?
     //    {
     //        variaveis "internal" podem ser acessadas apenas
     //        dentro da propria classe ou por herança, semelhante
     //        ao "protected" do Java
     //    }
     
-    init(n: Env) {
+    init(n: Env?) {
         self.table = [:]
         self.prev = n
     }
