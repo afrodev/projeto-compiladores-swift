@@ -27,11 +27,13 @@ class Parser {
         throw "near line \(Lexer.line): \(s)"
     }
     
-    func match(t: Int) {
+    func match(t: Int)  {
         if self.look!.tag == t {
             self.move()
         } else {
-            try! error("syntax error")
+            do {
+                try self.error("syntax error")
+            } catch { }
         }
     }
     
@@ -50,6 +52,7 @@ class Parser {
         self.top = Env(n: top!)
         self.decls()
         let s = self.stmts()
+        
         match(t: Int(Character("}").asciiValue!))
         self.top = savedEnv
         return s

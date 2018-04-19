@@ -13,13 +13,12 @@ class MainVC: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        Main sendo executado
 //        Analisador léxico
-//        let lexer = Lexer()
+        let lexer = Lexer()
         
 //        Analisador sintático
-//        let parse = Parser(lexer: lexer)
-//        parse.program()
-//        print("\n")
+        let parse = Parser(lexer: lexer)
+        parse.program()
+        print("\n")
     }
 }
