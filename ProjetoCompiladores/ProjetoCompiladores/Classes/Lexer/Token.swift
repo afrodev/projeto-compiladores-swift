@@ -9,18 +9,18 @@
 import Foundation
 
 class Token: Hashable {
+    final let tag: Int
+    
     var hashValue: Int {
         return tag
     }
     
-    static func == (lhs: Token, rhs: Token) -> Bool {
-        return lhs.tag == rhs.tag
-    }
-    
-    final let tag: Int
-    
     init(t: Int) {
         self.tag = t
+    }
+    
+    static func == (lhs: Token, rhs: Token) -> Bool {
+        return lhs.tag == rhs.tag
     }
     
     func toString() -> String {
