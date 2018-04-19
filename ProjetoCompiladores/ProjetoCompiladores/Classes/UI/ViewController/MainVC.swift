@@ -34,10 +34,12 @@ class Tag {
 }
 
 class Token: Hashable {
-    var hashValue: Int
+    var hashValue: Int {
+        return tag
+    }
     
     static func == (lhs: Token, rhs: Token) -> Bool {
-        <#code#>
+        return lhs.tag == rhs.tag
     }
     
     final let tag: Int
@@ -292,7 +294,7 @@ class Parser {
             match(t: Tag.ID)
             match(t: Int(Character(";").asciiValue!))
             let id = Id(id: tok as! Word, p: p, b: used)
-            top?.put(w: tok!, i: id.offset)
+            top?.put(w: tok!, i: id)
             used = used + p.width
         }
     }
@@ -563,7 +565,7 @@ class Parser {
 }
 
 class Env {
-    private var table: [Token : Id] // TODO(GUI): Tem que implementar os hashable de Token e Id
+    private var table: [Token : Id]
     internal var prev: Env
 //    {
 //        variaveis "internal" podem ser acessadas apenas
@@ -576,8 +578,8 @@ class Env {
         self.prev = n
     }
     
-    func put(w: Token, i: Int) {
-        self.table.updateValue(w.toString(), forKey: i)
+    func put(w: Token, i: Id) {
+        self.table.updateValue(i, forKey: w)
     }
     
     func get(w: Token) -> Id? {
@@ -586,10 +588,9 @@ class Env {
         while e != nil {
             let found: Id?
             
-            if e!.table[w.tag] != nil {
-                // TODO(GUI): ISSO AQUI TA MEGA ERRADO
-                found = Id(id: Word(s: w.toString(), tag: w.tag), p: Type(s: w.toString(), tag: w.tag, w: w.tag), b: w.tag)
-                return found!
+            if let id = e?.table[w] {
+                found = id
+                return found
             }
             e = e!.prev
         }
@@ -718,13 +719,7 @@ class Expr: Node {
     }
 }
 
-class Id: Expr, Hashable {
-    var hashValue: Int
-    
-    static func == (lhs: Id, rhs: Id) -> Bool {
-        <#code#>
-    }
-    
+class Id: Expr {
     var offset: Int
     
     init(id: Word, p: Type, b: Int) {
