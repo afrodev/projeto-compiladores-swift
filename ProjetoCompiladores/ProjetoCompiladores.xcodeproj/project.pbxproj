@@ -7,6 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD6CA3E4208909BC00A932BC /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3E3208909BC00A932BC /* Tag.swift */; };
+		CD6CA3E6208909E700A932BC /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3E5208909E700A932BC /* Token.swift */; };
+		CD6CA3E820890A0300A932BC /* Num.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3E720890A0300A932BC /* Num.swift */; };
+		CD6CA3EA20890A1B00A932BC /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3E920890A1B00A932BC /* Word.swift */; };
+		CD6CA3EC20890A3D00A932BC /* Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3EB20890A3D00A932BC /* Real.swift */; };
+		CD6CA3EE20890A7400A932BC /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3ED20890A7400A932BC /* Lexer.swift */; };
+		CD6CA3F120890AD300A932BC /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3F020890AD300A932BC /* Env.swift */; };
+		CD6CA3F320890B0100A932BC /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3F220890B0100A932BC /* Type.swift */; };
+		CD6CA3F520890B3600A932BC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3F420890B3600A932BC /* Array.swift */; };
+		CD6CA3F820890B8400A932BC /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3F720890B8400A932BC /* Node.swift */; };
+		CD6CA3FA20890BAF00A932BC /* Expr.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3F920890BAF00A932BC /* Expr.swift */; };
+		CD6CA3FC20890BCD00A932BC /* Id.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3FB20890BCD00A932BC /* Id.swift */; };
+		CD6CA3FE20890C3400A932BC /* Op.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3FD20890C3400A932BC /* Op.swift */; };
+		CD6CA40020890C7A00A932BC /* Arith.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA3FF20890C7A00A932BC /* Arith.swift */; };
+		CD6CA40220890C9A00A932BC /* Temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40120890C9A00A932BC /* Temp.swift */; };
+		CD6CA40420890CBB00A932BC /* Unary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40320890CBB00A932BC /* Unary.swift */; };
+		CD6CA40720890CEB00A932BC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40620890CEB00A932BC /* Constant.swift */; };
+		CD6CA40A20890D2700A932BC /* Logical.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40920890D2700A932BC /* Logical.swift */; };
+		CD6CA40C20890D4700A932BC /* Or.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40B20890D4700A932BC /* Or.swift */; };
+		CD6CA40E20890D6500A932BC /* And.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40D20890D6500A932BC /* And.swift */; };
+		CD6CA41020890D7F00A932BC /* Not.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA40F20890D7F00A932BC /* Not.swift */; };
+		CD6CA41220890D9E00A932BC /* Rel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41120890D9E00A932BC /* Rel.swift */; };
+		CD6CA41420890DBB00A932BC /* Access.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41320890DBB00A932BC /* Access.swift */; };
+		CD6CA41720890DF300A932BC /* Stmt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41620890DF300A932BC /* Stmt.swift */; };
+		CD6CA41A20890E1D00A932BC /* If.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41920890E1D00A932BC /* If.swift */; };
+		CD6CA41C20890E3900A932BC /* Else.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41B20890E3900A932BC /* Else.swift */; };
+		CD6CA41E20890E5300A932BC /* While.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41D20890E5300A932BC /* While.swift */; };
+		CD6CA42020890E6E00A932BC /* Do.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA41F20890E6E00A932BC /* Do.swift */; };
+		CD6CA42220890E9800A932BC /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA42120890E9800A932BC /* Set.swift */; };
+		CD6CA42420890EB400A932BC /* SetElem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA42320890EB400A932BC /* SetElem.swift */; };
+		CD6CA42620890ED700A932BC /* Seq.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA42520890ED700A932BC /* Seq.swift */; };
+		CD6CA42820890EFA00A932BC /* Break.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA42720890EFA00A932BC /* Break.swift */; };
+		CD6CA42B20890F4A00A932BC /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CA42A20890F4A00A932BC /* Parser.swift */; };
 		F2B40E66205B59F6000E081D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B40E65205B59F6000E081D /* AppDelegate.swift */; };
 		F2B40E6A205B59F6000E081D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2B40E69205B59F6000E081D /* Assets.xcassets */; };
 		F2B40E6D205B59F6000E081D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2B40E6B205B59F6000E081D /* Main.storyboard */; };
@@ -15,6 +48,39 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CD6CA3E3208909BC00A932BC /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		CD6CA3E5208909E700A932BC /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		CD6CA3E720890A0300A932BC /* Num.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Num.swift; sourceTree = "<group>"; };
+		CD6CA3E920890A1B00A932BC /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		CD6CA3EB20890A3D00A932BC /* Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Real.swift; sourceTree = "<group>"; };
+		CD6CA3ED20890A7400A932BC /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
+		CD6CA3F020890AD300A932BC /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
+		CD6CA3F220890B0100A932BC /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		CD6CA3F420890B3600A932BC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		CD6CA3F720890B8400A932BC /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		CD6CA3F920890BAF00A932BC /* Expr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expr.swift; sourceTree = "<group>"; };
+		CD6CA3FB20890BCD00A932BC /* Id.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Id.swift; sourceTree = "<group>"; };
+		CD6CA3FD20890C3400A932BC /* Op.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Op.swift; sourceTree = "<group>"; };
+		CD6CA3FF20890C7A00A932BC /* Arith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arith.swift; sourceTree = "<group>"; };
+		CD6CA40120890C9A00A932BC /* Temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temp.swift; sourceTree = "<group>"; };
+		CD6CA40320890CBB00A932BC /* Unary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unary.swift; sourceTree = "<group>"; };
+		CD6CA40620890CEB00A932BC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		CD6CA40920890D2700A932BC /* Logical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logical.swift; sourceTree = "<group>"; };
+		CD6CA40B20890D4700A932BC /* Or.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Or.swift; sourceTree = "<group>"; };
+		CD6CA40D20890D6500A932BC /* And.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = And.swift; sourceTree = "<group>"; };
+		CD6CA40F20890D7F00A932BC /* Not.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Not.swift; sourceTree = "<group>"; };
+		CD6CA41120890D9E00A932BC /* Rel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rel.swift; sourceTree = "<group>"; };
+		CD6CA41320890DBB00A932BC /* Access.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Access.swift; sourceTree = "<group>"; };
+		CD6CA41620890DF300A932BC /* Stmt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stmt.swift; sourceTree = "<group>"; };
+		CD6CA41920890E1D00A932BC /* If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = If.swift; sourceTree = "<group>"; };
+		CD6CA41B20890E3900A932BC /* Else.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Else.swift; sourceTree = "<group>"; };
+		CD6CA41D20890E5300A932BC /* While.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = While.swift; sourceTree = "<group>"; };
+		CD6CA41F20890E6E00A932BC /* Do.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Do.swift; sourceTree = "<group>"; };
+		CD6CA42120890E9800A932BC /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		CD6CA42320890EB400A932BC /* SetElem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetElem.swift; sourceTree = "<group>"; };
+		CD6CA42520890ED700A932BC /* Seq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seq.swift; sourceTree = "<group>"; };
+		CD6CA42720890EFA00A932BC /* Break.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Break.swift; sourceTree = "<group>"; };
+		CD6CA42A20890F4A00A932BC /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F2B40E62205B59F6000E081D /* ProjetoCompiladores.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjetoCompiladores.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B40E65205B59F6000E081D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2B40E69205B59F6000E081D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -36,6 +102,83 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD6CA3E22089099E00A932BC /* Lexer */ = {
+			isa = PBXGroup;
+			children = (
+				CD6CA3E3208909BC00A932BC /* Tag.swift */,
+				CD6CA3E5208909E700A932BC /* Token.swift */,
+				CD6CA3E720890A0300A932BC /* Num.swift */,
+				CD6CA3E920890A1B00A932BC /* Word.swift */,
+				CD6CA3EB20890A3D00A932BC /* Real.swift */,
+				CD6CA3ED20890A7400A932BC /* Lexer.swift */,
+			);
+			path = Lexer;
+			sourceTree = "<group>";
+		};
+		CD6CA3EF20890ABC00A932BC /* Symbols */ = {
+			isa = PBXGroup;
+			children = (
+				CD6CA3F020890AD300A932BC /* Env.swift */,
+				CD6CA3F220890B0100A932BC /* Type.swift */,
+				CD6CA3F420890B3600A932BC /* Array.swift */,
+			);
+			path = Symbols;
+			sourceTree = "<group>";
+		};
+		CD6CA3F620890B6E00A932BC /* Inter */ = {
+			isa = PBXGroup;
+			children = (
+				CD6CA3F720890B8400A932BC /* Node.swift */,
+				CD6CA3F920890BAF00A932BC /* Expr.swift */,
+				CD6CA3FB20890BCD00A932BC /* Id.swift */,
+				CD6CA3FD20890C3400A932BC /* Op.swift */,
+				CD6CA3FF20890C7A00A932BC /* Arith.swift */,
+				CD6CA40120890C9A00A932BC /* Temp.swift */,
+				CD6CA40320890CBB00A932BC /* Unary.swift */,
+				CD6CA40520890CDB00A932BC /* BoolExpressions */,
+				CD6CA41520890DD800A932BC /* Comands */,
+			);
+			path = Inter;
+			sourceTree = "<group>";
+		};
+		CD6CA40520890CDB00A932BC /* BoolExpressions */ = {
+			isa = PBXGroup;
+			children = (
+				CD6CA40620890CEB00A932BC /* Constant.swift */,
+				CD6CA40920890D2700A932BC /* Logical.swift */,
+				CD6CA40B20890D4700A932BC /* Or.swift */,
+				CD6CA40D20890D6500A932BC /* And.swift */,
+				CD6CA40F20890D7F00A932BC /* Not.swift */,
+				CD6CA41120890D9E00A932BC /* Rel.swift */,
+				CD6CA41320890DBB00A932BC /* Access.swift */,
+			);
+			path = BoolExpressions;
+			sourceTree = "<group>";
+		};
+		CD6CA41520890DD800A932BC /* Comands */ = {
+			isa = PBXGroup;
+			children = (
+				CD6CA41620890DF300A932BC /* Stmt.swift */,
+				CD6CA41920890E1D00A932BC /* If.swift */,
+				CD6CA41B20890E3900A932BC /* Else.swift */,
+				CD6CA41D20890E5300A932BC /* While.swift */,
+				CD6CA41F20890E6E00A932BC /* Do.swift */,
+				CD6CA42120890E9800A932BC /* Set.swift */,
+				CD6CA42320890EB400A932BC /* SetElem.swift */,
+				CD6CA42520890ED700A932BC /* Seq.swift */,
+				CD6CA42720890EFA00A932BC /* Break.swift */,
+			);
+			path = Comands;
+			sourceTree = "<group>";
+		};
+		CD6CA42920890F3600A932BC /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				CD6CA42A20890F4A00A932BC /* Parser.swift */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
 		F2B40E59205B59F6000E081D = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +207,10 @@
 		F2FBF54A206E951000B79CEF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CD6CA42920890F3600A932BC /* Parser */,
+				CD6CA3E22089099E00A932BC /* Lexer */,
+				CD6CA3EF20890ABC00A932BC /* Symbols */,
+				CD6CA3F620890B6E00A932BC /* Inter */,
 				F2B40E65205B59F6000E081D /* AppDelegate.swift */,
 				F2FBF54B206E952B00B79CEF /* UI */,
 				F2FBF553206EC66800B79CEF /* Utils */,
@@ -185,9 +332,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD6CA3E4208909BC00A932BC /* Tag.swift in Sources */,
+				CD6CA3EC20890A3D00A932BC /* Real.swift in Sources */,
+				CD6CA41A20890E1D00A932BC /* If.swift in Sources */,
+				CD6CA42020890E6E00A932BC /* Do.swift in Sources */,
+				CD6CA3FE20890C3400A932BC /* Op.swift in Sources */,
+				CD6CA3EA20890A1B00A932BC /* Word.swift in Sources */,
+				CD6CA42420890EB400A932BC /* SetElem.swift in Sources */,
+				CD6CA41220890D9E00A932BC /* Rel.swift in Sources */,
+				CD6CA41C20890E3900A932BC /* Else.swift in Sources */,
+				CD6CA3E6208909E700A932BC /* Token.swift in Sources */,
 				F2FBF547206E94C000B79CEF /* MainVC.swift in Sources */,
+				CD6CA41E20890E5300A932BC /* While.swift in Sources */,
+				CD6CA3F820890B8400A932BC /* Node.swift in Sources */,
+				CD6CA40720890CEB00A932BC /* Constant.swift in Sources */,
+				CD6CA41420890DBB00A932BC /* Access.swift in Sources */,
+				CD6CA3F320890B0100A932BC /* Type.swift in Sources */,
+				CD6CA41720890DF300A932BC /* Stmt.swift in Sources */,
+				CD6CA42220890E9800A932BC /* Set.swift in Sources */,
+				CD6CA3F120890AD300A932BC /* Env.swift in Sources */,
+				CD6CA40A20890D2700A932BC /* Logical.swift in Sources */,
+				CD6CA3FC20890BCD00A932BC /* Id.swift in Sources */,
 				F2B40E66205B59F6000E081D /* AppDelegate.swift in Sources */,
+				CD6CA41020890D7F00A932BC /* Not.swift in Sources */,
+				CD6CA40220890C9A00A932BC /* Temp.swift in Sources */,
+				CD6CA40420890CBB00A932BC /* Unary.swift in Sources */,
+				CD6CA3E820890A0300A932BC /* Num.swift in Sources */,
+				CD6CA42820890EFA00A932BC /* Break.swift in Sources */,
+				CD6CA3FA20890BAF00A932BC /* Expr.swift in Sources */,
+				CD6CA3F520890B3600A932BC /* Array.swift in Sources */,
+				CD6CA3EE20890A7400A932BC /* Lexer.swift in Sources */,
+				CD6CA42620890ED700A932BC /* Seq.swift in Sources */,
 				F2FBF551206EC65D00B79CEF /* Character+ASCII.swift in Sources */,
+				CD6CA42B20890F4A00A932BC /* Parser.swift in Sources */,
+				CD6CA40C20890D4700A932BC /* Or.swift in Sources */,
+				CD6CA40020890C7A00A932BC /* Arith.swift in Sources */,
+				CD6CA40E20890D6500A932BC /* And.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
