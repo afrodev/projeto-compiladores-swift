@@ -16,7 +16,7 @@ enum ReadChError: Error {
 class Lexer {
     static var line: Int = 1
     var peek: Character = " "
-    var words: [String: String] = [:]
+    var words: [String : Word] = [:]
     
     init() {
         reserve(word: Word(s: "if", tag: Tag.IF))
@@ -33,7 +33,7 @@ class Lexer {
     }
     
     func reserve(word: Word) {
-        words.updateValue(word.lexeme, forKey: word.toString())
+        words.updateValue(word, forKey: word.lexeme)
     }
     
     func readch() -> Bool {
@@ -116,13 +116,12 @@ class Lexer {
             
             let s: String = b
             
-            if let sw = words[s] {
-                let w: Word = Word.init(s: sw, tag: 0)
+            if let w: Word = words[s] {
                 return w
             }
             
             let w = Word(s: s, tag: Tag.ID)
-            words.updateValue(s, forKey: w.toString())
+            words.updateValue(w, forKey: s)
             return w
         }
         
